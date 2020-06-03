@@ -23,6 +23,6 @@ return [
     |
     */
 
-    'app_key' => env('ENGAGEMENT_APP_KEY'),
+    'app_key' => env('ENGAGEMENT_APP_KEY', 'key'),
 
 ];
