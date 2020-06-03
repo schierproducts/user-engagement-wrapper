@@ -14,7 +14,7 @@ use BenSampo\Enum\Enum;
  * @method static static Other()
  * @method static static SchierEmployee()
  */
-final class UserType extends Enum
+class UserType extends Enum
 {
     const EngineerArchitect = 'engineerArchitect';
     const Contractor = 'contractor';

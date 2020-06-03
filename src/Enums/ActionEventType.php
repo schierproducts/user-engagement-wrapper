@@ -20,7 +20,7 @@ use BenSampo\Enum\Enum;
  * @method static static SuggestFeatures()
  * @method static static EmailClicks()
  */
-final class ActionEventType extends Enum
+class ActionEventType extends Enum
 {
     const LoggedIn = 'loggedIn';
     const CreateProject = 'createProject';
