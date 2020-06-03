@@ -1,0 +1,57 @@
+{
+    "name": "schierproducts/user-engagement-api",
+    "description": "An API wrapper for the Schier Products user engagement platform.",
+    "keywords": [
+        "schierproducts",
+        "user-engagement-api"
+    ],
+    "version": "1.0.0",
+    "homepage": "https://github.com/schierproducts/user-engagement-api",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Doug Niccum",
+            "email": "doug@builtwellstudio.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "illuminate/support": "^7.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^5.0",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Schierproducts\\UserEngagementApi\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Schierproducts\\UserEngagementApi\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Schierproducts\\UserEngagementApi\\UserEngagementApiServiceProvider"
+            ],
+            "aliases": {
+                "UserEngagementApi": "Schierproducts\\UserEngagementApi\\Facades\\UserEngagementApi"
+            }
+        }
+    }
+}
