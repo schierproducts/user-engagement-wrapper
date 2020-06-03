@@ -4,10 +4,14 @@
 namespace Schierproducts\UserEngagementApi\Interfaces\ActionEvent;
 
 
+use Schierproducts\UserEngagementApi\Enums\ActionEventType;
 use Schierproducts\UserEngagementApi\Exceptions\InvalidValue;
+use Schierproducts\UserEngagementApi\Interfaces\ModelInterface;
 
 class ActionEventInterface
 {
+    use ModelInterface;
+
     /**
      * @var string
      */
@@ -45,12 +49,20 @@ class ActionEventInterface
     public function __construct($type, $description = null, $project = null, $engineer = null, $meta = null)
     {
         if (is_array($type)) {
-            $this->type = array_key_exists('type', $type) ? $type['type'] : null;
+            if (array_key_exists('type', $type)) {
+                if (!$this->typeIsValid($type['type'])) {
+                    throw InvalidValue::type('type', $this->availableTypes());
+                }
+                $this->type = $type['type'];
+            }
             $this->description = array_key_exists('description', $type) ? $type['description'] : null;
             $this->project = array_key_exists('project', $type) ? $type['project'] : null;
             $this->engineer = array_key_exists('engineer', $type) ? $type['engineer'] : null;
             $this->meta = array_key_exists('meta', $type) ? json_encode($type['meta']) : null;
         } else {
+            if (!$this->typeIsValid($type)) {
+                throw InvalidValue::type('type', $this->availableTypes());
+            }
             $this->type = $type;
             $this->description = $description;
             $this->project = $project;
@@ -66,48 +78,10 @@ class ActionEventInterface
     }
 
     /**
-     * @return array
-     */
-    public function toArray()
-    {
-        $array = [];
-
-        foreach ($this as $key => $value) {
-            $array[$key] = $value;
-        }
-
-        return $array;
-    }
-
-    /**
      * @return string[]
      */
     public final function availableTypes()
     {
-        return [
-            'loggedIn',
-            'createProject',
-            'completedSizing',
-            'submittedPreApproval',
-            'viewedKickout',
-            'addedAddress',
-            'cloneProject',
-            'closeProject',
-            'addedNote',
-            'signedUp',
-            'viewedProduct',
-            'sharedSizing',
-            'suggestFeatures',
-            'emailClicks',
-        ];
-    }
-
-    /**
-     * @param string $value
-     * @return boolean
-     */
-    private function typeIsValid($value)
-    {
-        return in_array($value, $this->availableTypes());
+        return ActionEventType::getValues();
     }
 }

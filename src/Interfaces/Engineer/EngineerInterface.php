@@ -4,8 +4,14 @@
 namespace Schierproducts\UserEngagementApi\Interfaces\Engineer;
 
 
+use Schierproducts\UserEngagementApi\Enums\UserType;
+use Schierproducts\UserEngagementApi\Exceptions\InvalidValue;
+use Schierproducts\UserEngagementApi\Interfaces\ModelInterface;
+
 class EngineerInterface
 {
+    use ModelInterface;
+
     /**
      * @var string
      */
@@ -58,7 +64,12 @@ class EngineerInterface
             $this->email = array_key_exists('email', $array) ? $array['email'] : null;
             $this->registered = array_key_exists('registered', $array) ? $array['registered'] : null;
             $this->phone_number = array_key_exists('phone_number', $array) ? $array['phone_number'] : null;
-            $this->type = array_key_exists('type', $array) ? $array['type'] : null;
+            if (array_key_exists('type', $array) && !empty($array['type'])) {
+                if (!$this->typeIsValid($array['type'])) {
+                    throw InvalidValue::type('type', $this->availableTypes());
+                }
+                $this->type = $array['type'];
+            }
             $this->company = array_key_exists('company', $array) ? $array['company'] : null;
             $this->postal_code = array_key_exists('postal_code', $array) ? $array['postal_code'] : null;
         }
@@ -69,15 +80,6 @@ class EngineerInterface
      */
     public final function availableTypes()
     {
-        return [
-            'engineerArchitect',
-            'contractor',
-            'distributor',
-            'ahjInspector',
-            'facilityOwner',
-            'manufacturerRep',
-            'other',
-            'schierEmployee',
-        ];
+        return UserType::getValues();
     }
 }

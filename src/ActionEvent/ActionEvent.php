@@ -9,6 +9,7 @@ use Schierproducts\UserEngagementApi\Exceptions\InvalidKey;
 use Schierproducts\UserEngagementApi\Exceptions\InvalidValue;
 use Schierproducts\UserEngagementApi\Interfaces\ActionEvent\ActionEventInterface;
 use Schierproducts\UserEngagementApi\Interfaces\ActionEvent\ActionEventQuery;
+use Schierproducts\UserEngagementApi\Interfaces\ActionEvent\ActionEventResult;
 use Schierproducts\UserEngagementApi\Interfaces\HandleErrors;
 use Schierproducts\UserEngagementApi\Requests\ApiRequest;
 
@@ -16,6 +17,9 @@ class ActionEvent implements ActionEventProvider
 {
     use HandleErrors;
 
+    /**
+     * @var ApiRequest
+     */
     protected $request;
 
     public function __construct()
@@ -27,6 +31,7 @@ class ActionEvent implements ActionEventProvider
      * Retrieve a list of action events based on passed parameters
      *
      * @param ActionEventQuery $query
+     * @return ActionEventResult[]
      * @throws InvalidEndpoint
      * @throws InvalidKey|InvalidValue|\Exception
      */
@@ -36,7 +41,9 @@ class ActionEvent implements ActionEventProvider
             ->get('/api/v1/action-event', $query->url());
 
         if ($response->successful()) {
-            return $response->json()['data'];
+            return collect($response->json()['data'])->map(function($result) {
+                return $this->buildResult($result);
+            })->toArray();
         } else {
             $this->parseErrors($response);
         }
@@ -46,7 +53,7 @@ class ActionEvent implements ActionEventProvider
      * Create a new instance of the action event
      *
      * @param ActionEventInterface $actionEvent
-     * @return mixed
+     * @return ActionEventResult
      * @throws InvalidEndpoint
      * @throws InvalidKey
      * @throws InvalidValue
@@ -57,7 +64,8 @@ class ActionEvent implements ActionEventProvider
             ->post('/api/v1/action-event', $actionEvent->toArray());
 
         if ($response->successful()) {
-            return $response->json();
+            $body = $response->json();
+            return $this->buildResult($body);
         } else {
             $this->parseErrors($response);
         }
@@ -67,7 +75,7 @@ class ActionEvent implements ActionEventProvider
      * Retrieves an action event by ID
      *
      * @param int $id
-     * @return array
+     * @return ActionEventResult
      * @throws InvalidEndpoint
      * @throws InvalidKey
      * @throws InvalidValue
@@ -78,9 +86,40 @@ class ActionEvent implements ActionEventProvider
             ->get('/api/v1/action-event/'.$id);
 
         if ($response->successful()) {
-            return $response->json();
+            $body = $response->json();
+            return $this->buildResult($body);
         } else {
             $this->parseErrors($response);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function emailLink(string $url, string $email)
+    {
+        $baseUrl = config('user-engagement-api.base_url');
+        if (empty($baseUrl)) {
+            throw new InvalidEndpoint;
+        }
+
+        return "$baseUrl?email=".urlencode($email)."&link=".urlencode($url);
+    }
+
+    /**
+     * @param array $result
+     * @return ActionEventResult
+     */
+    private function buildResult(array $result)
+    {
+        return new ActionEventResult(
+            $result['id'],
+            $result['type'],
+            $result['description'],
+            $result['created'],
+            $result['meta'],
+            $result['project'],
+            $result['engineer'],
+        );
     }
 }

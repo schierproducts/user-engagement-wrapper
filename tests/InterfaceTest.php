@@ -78,7 +78,7 @@ class InterfaceTest extends TestCase
      */
     public function engineer_interface_created_with_array()
     {
-        $library = new ActionEventInterface([]);
+        $library = new EngineerInterface([]);
         $types = $library->availableTypes();
 
         $firstName = $this->faker->firstName;
@@ -88,10 +88,7 @@ class InterfaceTest extends TestCase
         $phone = $this->faker->phoneNumber;
         $company = $this->faker->company;
         $postal_code = $this->faker->postcode;
-        $type = [
-            $this->faker->numberBetween(0, count($types) - 1),
-            $this->faker->numberBetween(0, count($types) - 1)
-        ];
+        $type = $types[$this->faker->numberBetween(0, count($types) - 1)];
 
         $interface = new EngineerInterface([
             'first_name' => $firstName,

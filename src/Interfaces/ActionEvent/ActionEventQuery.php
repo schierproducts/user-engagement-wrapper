@@ -62,7 +62,6 @@ class ActionEventQuery
      */
     public function url()
     {
-//        $url = "?";
         $url = "";
 
         if ($this->offset) {

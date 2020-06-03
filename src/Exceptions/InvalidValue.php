@@ -35,4 +35,15 @@ class InvalidValue extends Exception
             return new static($error);
         }
     }
+
+    /**
+     * @param string $field
+     * @param string[] $availableValues
+     * @return static
+     */
+    public static function type(string $field, array $availableValues)
+    {
+        $string = implode(', ', $availableValues);
+        return new static("The $field that you have provided is incorrect. The available values are: ".$string);
+    }
 }

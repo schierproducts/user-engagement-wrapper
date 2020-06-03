@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Schierproducts\UserEngagementApi\Interfaces;
+namespace Schierproducts\UserEngagementApi\Interfaces\Engineer;
 
 
 use Schierproducts\UserEngagementApi\Exceptions\InvalidValue;
@@ -27,7 +27,7 @@ class EngineerQuery
         $this->limit = $limit;
 
         if ($type !== null) {
-            if (is_array($type)) {
+            if (is_array($type) && count($type) > 0) {
                 $this->type = $type;
             } else {
                 throw InvalidValue::expectsArray('type');
@@ -42,17 +42,17 @@ class EngineerQuery
      */
     public function url()
     {
-        $url = "?";
+        $url = "";
 
         if ($this->offset) {
-            $url =+ "offset=".$this->offset."&";
+            $url .= "offset=".$this->offset."&";
         }
         if ($this->limit) {
-            $url =+ "limit=".$this->limit."&";
+            $url .= "limit=".$this->limit."&";
         }
         if ($this->type) {
             foreach($this->type as $type) {
-                $url =+ "type[]=".$type."&";
+                $url .= "type[]=".$type."&";
             }
         }
 
