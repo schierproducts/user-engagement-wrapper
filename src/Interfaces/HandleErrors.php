@@ -8,6 +8,7 @@ use Illuminate\Http\Client\Response;
 use Schierproducts\UserEngagementApi\Exceptions\InvalidEndpoint;
 use Schierproducts\UserEngagementApi\Exceptions\InvalidKey;
 use Schierproducts\UserEngagementApi\Exceptions\InvalidValue;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 
 trait HandleErrors
 {
@@ -31,6 +32,10 @@ trait HandleErrors
                 throw InvalidEndpoint::notFound();
             case 422:
                 throw InvalidValue::validation($response->json());
+            case 429:
+                throw new TooManyRequestsHttpException(60,'Too many requests were performed.');
+            default:
+                throw new \Exception('An error occurred.', 500);
         }
     }
 }

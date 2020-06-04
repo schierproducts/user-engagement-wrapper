@@ -50,33 +50,39 @@ class ImportEngineers extends Command
         $numberOfUsers = $model::count();
         $bar = $this->output->createProgressBar($numberOfUsers);
 
-        $model::chunk(200, function ($models) use ($bar) {
-            foreach ($models as $model) {
-                if (!is_string($model->user_type)) {
-                    $type = optional($model->user_type)->value;
-                } else {
-                    $type = $model->user_type;
+        try {
+            $model::chunk(200, function ($models) use ($bar) {
+                foreach ($models as $model) {
+                    if (!is_string($model->user_type)) {
+                        $type = optional($model->user_type)->value;
+                    } else {
+                        $type = $model->user_type;
+                    }
+
+                    $newEngineer = new EngineerInterface([
+                        'first_name' => $model->first_name,
+                        'last_name' => $model->last_name,
+                        'email' => $model->email,
+                        'type' => $type,
+                        'phone_number' => $model->phone_number,
+                        'company' => $model->company,
+                        'postal_code' => $model->postal_code,
+                        'registered' => $model->created_at->timestamp
+                    ]);
+                    UserEngagementApi::engineer()->create($newEngineer);
+
+                    $bar->advance();
                 }
+            });
 
-                $newEngineer = new EngineerInterface([
-                    'first_name' => $model->first_name,
-                    'last_name' => $model->last_name,
-                    'email' => $model->email,
-                    'type' => $type,
-                    'phone_number' => $model->phone_number,
-                    'company' => $model->company,
-                    'postal_code' => $model->postal_code,
-                    'registered' => $model->created_at->timestamp
-                ]);
-                UserEngagementApi::engineer()->create($newEngineer);
+            $bar->finish();
 
-                $bar->advance();
-            }
-        });
-        $bar->finish();
+            $bar->clear();
 
-        $bar->clear();
-
-        $this->info('The indicated model has been successfully imported.');
+            $this->info('The indicated model has been successfully imported.');
+        } catch (\Exception $exception) {
+            $bar->clear();
+            $this->error($exception->getMessage());
+        }
     }
 }
