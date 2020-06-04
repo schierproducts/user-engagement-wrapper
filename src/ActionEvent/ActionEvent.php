@@ -53,13 +53,17 @@ class ActionEvent implements ActionEventProvider
      * Create a new instance of the action event
      *
      * @param ActionEventInterface $actionEvent
-     * @return ActionEventResult
+     * @return ActionEventResult|void
      * @throws InvalidEndpoint
      * @throws InvalidKey
      * @throws InvalidValue
      */
     public function create(ActionEventInterface $actionEvent)
     {
+        if (!config('user-engagement-api.log_events')) {
+            return;
+        }
+
         $response = $this->request->client
             ->post('/api/v1/action-event', $actionEvent->toArray());
 
