@@ -3,6 +3,7 @@
 namespace Schierproducts\UserEngagementApi;
 
 use Illuminate\Support\ServiceProvider;
+use Schierproducts\UserEngagementApi\Commands\ImportEngineers;
 
 class UserEngagementApiServiceProvider extends ServiceProvider
 {
@@ -14,15 +15,15 @@ class UserEngagementApiServiceProvider extends ServiceProvider
         /*
          * Optional methods to load your package assets
          */
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
-
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('user-engagement-api.php'),
             ], 'config');
 
             // Registering package commands.
-            // $this->commands([]);
+             $this->commands([
+                 ImportEngineers::class
+             ]);
         }
     }
 
