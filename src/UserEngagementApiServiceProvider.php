@@ -17,7 +17,7 @@ class UserEngagementApiServiceProvider extends ServiceProvider
          */
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('user-engagement-api.php'),
+                __DIR__.'/../config/user-engagement-api.php' => config_path('user-engagement-api.php'),
             ], 'config');
 
             // Registering package commands.
