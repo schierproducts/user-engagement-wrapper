@@ -25,4 +25,15 @@ return [
 
     'app_key' => env('ENGAGEMENT_APP_KEY', 'key'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Log Events
+    |--------------------------------------------------------------------------
+    |
+    | If the engagement api should log events. Can be useful in development environments.
+    |
+    */
+
+    'log_events' => env('ENGAGEMENT_LOG_EVENTS', true),
+
 ];
