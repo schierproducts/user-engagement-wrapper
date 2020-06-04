@@ -96,14 +96,14 @@ class ActionEvent implements ActionEventProvider
     /**
      * @inheritDoc
      */
-    public function emailLink(string $url, string $email)
+    public function link(string $url, string $email, string $type = 'email')
     {
         $baseUrl = config('user-engagement-api.base_url');
         if (empty($baseUrl)) {
             throw new InvalidEndpoint;
         }
 
-        return "$baseUrl?email=".urlencode($email)."&link=".urlencode($url);
+        return "$baseUrl?email=".urlencode($email)."&link=".urlencode($url)."&type=".urlencode($type);
     }
 
     /**

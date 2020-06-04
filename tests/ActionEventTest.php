@@ -76,7 +76,7 @@ class ActionEventTest extends TestCase
 
     /**
      * @test
-     * @covers \Schierproducts\UserEngagementApi\ActionEvent\ActionEvent::emailLink
+     * @covers \Schierproducts\UserEngagementApi\ActionEvent\ActionEvent::link
      */
     public function can_get_valid_email_url()
     {
@@ -85,9 +85,29 @@ class ActionEventTest extends TestCase
         $firstEngineer = $list[0];
         $email = $firstEngineer->email;
         $url = 'https://greasemonkey.schierproducts.com';
-        $emailLink = UserEngagementApi::actionEvent()->emailLink($url, $email);
+        $emailLink = UserEngagementApi::actionEvent()->link($url, $email);
 
         $this->assertTrue(strpos($emailLink, "email=".urlencode($email)) !== false);
         $this->assertTrue(strpos($emailLink, "link=".urlencode($url)) !== false);
+        $this->assertTrue(strpos($emailLink, "type=".urlencode('email')) !== false);
+    }
+
+    /**
+     * @test
+     * @covers \Schierproducts\UserEngagementApi\ActionEvent\ActionEvent::link
+     */
+    public function can_get_valid_product_url()
+    {
+        $newQuery = new EngineerQuery(0, 1);
+        $list = UserEngagementApi::engineer()->list($newQuery);
+        $firstEngineer = $list[0];
+        $email = $firstEngineer->email;
+        $url = 'https://greasemonkey.schierproducts.com';
+        $type = 'product';
+        $emailLink = UserEngagementApi::actionEvent()->link($url, $email, $type);
+
+        $this->assertTrue(strpos($emailLink, "email=".urlencode($email)) !== false);
+        $this->assertTrue(strpos($emailLink, "link=".urlencode($url)) !== false);
+        $this->assertTrue(strpos($emailLink, "type=".urlencode($type)) !== false);
     }
 }

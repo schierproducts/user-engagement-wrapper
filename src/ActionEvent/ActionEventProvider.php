@@ -34,11 +34,12 @@ interface ActionEventProvider
     public function retrieve(int $id);
 
     /**
-     * Generates a link that can be used to track an email click
+     * Generates a link that can be used to track an various links
      *
      * @param string $url
      * @param string $email
+     * @param string $type The type of event; can be "email" or "product"
      * @return string
      */
-    public function emailLink(string $url, string $email);
+    public function link(string $url, string $email, string $type);
 }
