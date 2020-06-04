@@ -24,6 +24,7 @@ class UserType extends Enum
     const ManufacturerRep = 'manufacturerRep';
     const Other = 'other';
     const SchierEmployee = 'schierEmployee';
+    const NA = null;
 
     public static function getDescription($value): string
     {
@@ -37,6 +38,8 @@ class UserType extends Enum
             return 'Manufacturer Rep';
         } elseif ($value === self::SchierEmployee) {
             return 'Schier Employee';
+        } elseif ($value === self::NA) {
+            return 'N/A';
         }
 
         return parent::getDescription($value);

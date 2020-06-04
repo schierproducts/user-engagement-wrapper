@@ -22,6 +22,7 @@ class Engineer extends JsonResource
      */
     public function toArray($request)
     {
+//        $type = $this->type ? UserType::getInstance($this->type)->value : null;
         return [
             'id' => $this->id,
             'first_name' => $this->first_name,
