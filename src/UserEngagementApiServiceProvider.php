@@ -7,6 +7,8 @@ use Schierproducts\UserEngagementApi\Commands\ImportEngineers;
 
 class UserEngagementApiServiceProvider extends ServiceProvider
 {
+    private $config = 'user-engagement-api';
+
     /**
      * Bootstrap the application services.
      */
@@ -17,7 +19,7 @@ class UserEngagementApiServiceProvider extends ServiceProvider
          */
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/user-engagement-api.php' => config_path('user-engagement-api.php'),
+                __DIR__.'/../config/'.$this->config.'.php' => config_path($this->config.'.php'),
             ], 'config');
 
             // Registering package commands.
@@ -33,7 +35,7 @@ class UserEngagementApiServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'user-engagement-api');
+        $this->mergeConfigFrom(__DIR__.'/../config/'.$this->config.'.php', $this->config);
 
         // Register the main class to use with the facade
         $this->app->singleton('user-engagement-api', function () {
