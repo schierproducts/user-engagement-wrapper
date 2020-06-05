@@ -11,8 +11,8 @@ class UserEngagementApi extends Facade
      *
      * @return string
      */
-    public static function getFacadeAccessor()
+    protected static function getFacadeAccessor()
     {
-        return 'user-engagement-api';
+        return 'userEngagementApi';
     }
 }

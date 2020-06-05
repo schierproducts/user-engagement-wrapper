@@ -38,7 +38,7 @@ class UserEngagementApiServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/'.$this->config.'.php', $this->config);
 
         // Register the main class to use with the facade
-        $this->app->singleton('user-engagement-api', function () {
+        $this->app->singleton('userEngagementApi', function() {
             return new UserEngagementApi();
         });
     }
