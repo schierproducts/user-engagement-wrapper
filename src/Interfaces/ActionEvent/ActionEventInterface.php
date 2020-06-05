@@ -33,9 +33,14 @@ class ActionEventInterface
     public $engineer;
 
     /**
-     * @var string|null
+     * @var array|null
      */
     public $meta;
+
+    /**
+     * @var string
+     */
+    public $engineer_email;
 
     /**
      * ActionEventInterface constructor.
@@ -43,10 +48,11 @@ class ActionEventInterface
      * @param string|null $description
      * @param string|null $project
      * @param string|null $engineer
+     * @param string|null $engineerEmail
      * @param array|null $meta
      * @throws InvalidValue
      */
-    public function __construct($type, $description = null, $project = null, $engineer = null, $meta = null)
+    public function __construct($type, $description = null, $project = null, $engineer = null, $engineerEmail = null, $meta = null)
     {
         if (is_array($type)) {
             if (array_key_exists('type', $type)) {
@@ -59,6 +65,7 @@ class ActionEventInterface
             $this->project = array_key_exists('project', $type) ? $type['project'] : null;
             $this->engineer = array_key_exists('engineer', $type) ? $type['engineer'] : null;
             $this->meta = array_key_exists('meta', $type) ? json_encode($type['meta']) : null;
+            $this->engineer_email = array_key_exists('engineer', $type) ? $type['engineer_email'] : null;
         } else {
             if (!$this->typeIsValid($type)) {
                 throw InvalidValue::type('type', $this->availableTypes());
@@ -67,6 +74,7 @@ class ActionEventInterface
             $this->description = $description;
             $this->project = $project;
             $this->engineer = $engineer;
+            $this->engineer_email = $engineerEmail;
             if ($meta !== null) {
                 if (!is_array($meta)) {
                     throw InvalidValue::expectsArray('meta');

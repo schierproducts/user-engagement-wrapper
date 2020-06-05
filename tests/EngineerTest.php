@@ -101,7 +101,7 @@ class EngineerTest extends TestCase
             'type' => $originalValue->type,
         ]);
 
-        $updatedResponse = UserEngagementApi::engineer()->update($originalValue->id, $updatedEngineer);
+        $updatedResponse = UserEngagementApi::engineer()->update($updatedEngineer, $originalValue->id);
 
         $this->assertTrue($updatedResponse->first_name === $originalValue->first_name);
         $this->assertTrue($updatedResponse->email === $email);
@@ -118,7 +118,51 @@ class EngineerTest extends TestCase
             'postal_code' => $originalValue->postal_code,
             'type' => $originalValue->type,
         ]);
-        UserEngagementApi::engineer()->update($originalValue->id, $updatedEngineer);
+        UserEngagementApi::engineer()->update($updatedEngineer, $originalValue->id);
+    }
+
+    /**
+     * @test
+     * @covers \Schierproducts\UserEngagementApi\Engineer\Engineer::update
+     */
+    public function can_update_engineer_just_with_email()
+    {
+        $email = $this->faker->safeEmail;
+        $phone = $this->faker->phoneNumber;
+        $company = $this->faker->company;
+
+        $originalValue = UserEngagementApi::engineer()->retrieve(2);
+
+        $updatedEngineer = new EngineerInterface([
+            'first_name' => $originalValue->first_name,
+            'last_name' => $originalValue->last_name,
+            'email' => $email,
+            'original_email' => $originalValue->email,
+            'phone_number' => $phone,
+            'company' => $company,
+            'postal_code' => $originalValue->postal_code,
+            'type' => $originalValue->type,
+        ]);
+
+        $updatedResponse = UserEngagementApi::engineer()->update($updatedEngineer);
+
+        $this->assertTrue($updatedResponse->first_name === $originalValue->first_name);
+        $this->assertTrue($updatedResponse->email === $email);
+        $this->assertTrue($updatedResponse->phone_number === $phone);
+        $this->assertTrue($updatedResponse->company === $company);
+
+        // revert it back to allow for future tests
+        $updatedEngineer = new EngineerInterface([
+            'first_name' => $originalValue->first_name,
+            'last_name' => $originalValue->last_name,
+            'email' => $originalValue->email,
+            'original_email' => $email,
+            'phone_number' => $originalValue->phone_number,
+            'company' => $originalValue->company,
+            'postal_code' => $originalValue->postal_code,
+            'type' => $originalValue->type,
+        ]);
+        UserEngagementApi::engineer()->update($updatedEngineer);
     }
 
     /**

@@ -15,7 +15,7 @@ interface EngineerProvider
 
     public function retrieve(int $id);
 
-    public function update(int $id, EngineerInterface $engineer);
+    public function update(EngineerInterface $engineer, $id = null);
 
     public function destroy(int $id) : bool;
 }

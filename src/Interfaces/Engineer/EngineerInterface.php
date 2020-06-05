@@ -28,6 +28,11 @@ class EngineerInterface
     public $email;
 
     /**
+     * @var string|null
+     */
+    public $original_email;
+
+    /**
      * @var string
      */
     public $registered;
@@ -62,6 +67,7 @@ class EngineerInterface
             $this->first_name = array_key_exists('first_name', $array) ? $array['first_name'] : null;
             $this->last_name = array_key_exists('last_name', $array) ? $array['last_name'] : null;
             $this->email = array_key_exists('email', $array) ? $array['email'] : null;
+            $this->original_email = array_key_exists('original_email', $array) ? $array['original_email'] : null;
             $this->registered = array_key_exists('registered', $array) ? $array['registered'] : null;
             $this->phone_number = array_key_exists('phone_number', $array) ? $array['phone_number'] : null;
             if (array_key_exists('type', $array) && !empty($array['type'])) {

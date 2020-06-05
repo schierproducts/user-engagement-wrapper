@@ -92,15 +92,21 @@ class Engineer implements EngineerProvider
     /**
      * Updates an existing engineer
      *
-     * @param int $id
      * @param EngineerInterface $engineer
+     * @param int|null $id
      * @return EngineerResult
      * @throws InvalidEndpoint|InvalidKey|InvalidValue|\Exception
      */
-    public function update(int $id, EngineerInterface $engineer)
+    public function update(EngineerInterface $engineer, $id = null)
     {
-        $response = $this->request->client
-            ->put('/api/v1/engineer/'.$id, $engineer->toArray());
+        if ($id) {
+            $response = $this->request->client
+                ->put('/api/v1/engineer/'.$id, $engineer->toArray());
+        } else {
+            $response = $this->request->client
+                ->put('/api/v1/engineer', $engineer->toArray());
+        }
+
         if ($response->successful()) {
             $body = $response->json();
             return $this->buildResult($body);
