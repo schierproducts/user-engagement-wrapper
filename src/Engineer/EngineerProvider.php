@@ -17,5 +17,5 @@ interface EngineerProvider
 
     public function update(EngineerInterface $engineer, $id = null);
 
-    public function destroy(int $id) : bool;
+    public function destroy(int $id = null, string $email = null) : bool;
 }

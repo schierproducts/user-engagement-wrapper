@@ -119,13 +119,21 @@ class Engineer implements EngineerProvider
      * Deletes an engineer
      *
      * @param int $id
+     * @param string|null $email
      * @return bool
      * @throws InvalidEndpoint|InvalidKey|InvalidValue|\Exception
      */
-    public function destroy(int $id) : bool
+    public function destroy(int $id = null, string $email = null) : bool
     {
-        $response = $this->request->client
-            ->delete('/api/v1/engineer/'.$id);
+        if ($id) {
+            $response = $this->request->client
+                ->delete('/api/v1/engineer/'.$id);
+        } else {
+            $response = $this->request->client
+                ->delete('/api/v1/engineer', [
+                    'email' => $email
+                ]);
+        }
 
         if ($response->successful()) {
             return true;

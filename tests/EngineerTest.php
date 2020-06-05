@@ -7,6 +7,7 @@ use Orchestra\Testbench\TestCase;
 use Schierproducts\UserEngagementApi\Enums\UserType;
 use Schierproducts\UserEngagementApi\Interfaces\Engineer\EngineerInterface;
 use Schierproducts\UserEngagementApi\Interfaces\Engineer\EngineerQuery;
+use Schierproducts\UserEngagementApi\Interfaces\Engineer\EngineerResult;
 use Schierproducts\UserEngagementApi\UserEngagementApi;
 use Schierproducts\UserEngagementApi\UserEngagementApiServiceProvider;
 
@@ -175,6 +176,22 @@ class EngineerTest extends TestCase
         $lastItem = $list->last();
 
         $response = UserEngagementApi::engineer()->destroy($lastItem->id);
+        $this->assertTrue($response);
+    }
+
+    /**
+     * @test
+     * @covers \Schierproducts\UserEngagementApi\Engineer\Engineer::destroy
+     */
+    public function can_delete_engineer_with_email_address()
+    {
+        $list =  collect(UserEngagementApi::engineer()->list());
+        /**
+         * @var EngineerResult $lastItem
+         */
+        $lastItem = $list->last();
+
+        $response = UserEngagementApi::engineer()->destroy(null, $lastItem->email);
         $this->assertTrue($response);
     }
 }
