@@ -59,8 +59,15 @@ class ActionEventResult
         $this->type = $type;
         $this->description = $description;
         $this->created = Carbon::createFromTimestamp($created);
-        $this->meta = $meta ? json_decode($meta) : null;
         $this->project = $project;
         $this->engineer = $engineer;
+
+        if ($meta) {
+            $this->meta = $meta;
+
+            if (is_string($meta)) {
+                $this->meta = json_decode($meta);
+            }
+        }
     }
 }

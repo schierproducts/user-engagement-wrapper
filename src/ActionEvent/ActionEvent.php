@@ -107,7 +107,7 @@ class ActionEvent implements ActionEventProvider
             throw new InvalidEndpoint;
         }
 
-        return "$baseUrl?email=".urlencode($email)."&link=".urlencode($url)."&type=".urlencode($type);
+        return $baseUrl."/link-track?email=".urlencode($email)."&link=".urlencode($url)."&type=".urlencode($type);
     }
 
     /**
