@@ -73,14 +73,22 @@ class Engineer implements EngineerProvider
     /**
      * Retrieves an engineer by ID
      *
-     * @param int $id
+     * @param int|null $id
+     * @param string|null $email
      * @return EngineerResult
      * @throws InvalidEndpoint|InvalidKey|InvalidValue|\Exception
      */
-    public function retrieve(int $id)
+    public function retrieve(int $id = null, string $email = null)
     {
-        $response = $this->request->client
-            ->get('/api/v1/engineer/'.$id);
+        if ($email) {
+            $response = $this->request->client
+                ->get('/api/v1/engineer-email', [
+                    'email' => $email
+                ]);
+        } else {
+            $response = $this->request->client
+                ->get('/api/v1/engineer/'.$id);
+        }
 
         if ($response->successful()) {
             $body = $response->json();

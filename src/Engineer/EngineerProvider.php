@@ -13,7 +13,7 @@ interface EngineerProvider
 
     public function create(EngineerInterface $engineer);
 
-    public function retrieve(int $id);
+    public function retrieve(int $id = null, string $email = null);
 
     public function update(EngineerInterface $engineer, $id = null);
 

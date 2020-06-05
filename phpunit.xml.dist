@@ -30,6 +30,6 @@
     </logging>
     <php>
         <server name="ENGAGEMENT_BASE_URL" value="http://schier-analytics:8888"/>
-        <server name="ENGAGEMENT_APP_KEY" value="app_key_b5ea083f270115d909671d347476d38b"/>
+        <server name="ENGAGEMENT_APP_KEY" value="app_key_60623022a7d1d5c44eb27b51ed7d640e"/>
     </php>
 </phpunit>

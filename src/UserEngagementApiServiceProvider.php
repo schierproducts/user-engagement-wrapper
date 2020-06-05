@@ -4,6 +4,7 @@ namespace Schierproducts\UserEngagementApi;
 
 use Illuminate\Support\ServiceProvider;
 use Schierproducts\UserEngagementApi\Commands\ImportEngineers;
+use Schierproducts\UserEngagementApi\Commands\ImportEvents;
 
 class UserEngagementApiServiceProvider extends ServiceProvider
 {
@@ -24,7 +25,8 @@ class UserEngagementApiServiceProvider extends ServiceProvider
 
             // Registering package commands.
              $this->commands([
-                 ImportEngineers::class
+                 ImportEngineers::class,
+                 ImportEvents::class,
              ]);
         }
     }

@@ -82,6 +82,21 @@ class EngineerTest extends TestCase
 
     /**
      * @test
+     * @covers \Schierproducts\UserEngagementApi\Engineer\Engineer::retrieve
+     */
+    public function can_get_engineer_by_email()
+    {
+        $query = new EngineerQuery(0, 5);
+        $response = UserEngagementApi::engineer()->list($query);
+        $first = $response[0];
+
+        $response = UserEngagementApi::engineer()->retrieve(null, $first->email);
+
+        $this->assertTrue($response->email === $first->email);
+    }
+
+    /**
+     * @test
      * @covers \Schierproducts\UserEngagementApi\Engineer\Engineer::update
      */
     public function can_update_engineer()
