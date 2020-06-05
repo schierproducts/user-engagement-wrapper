@@ -7,6 +7,8 @@ use Exception;
 
 class InvalidEndpoint extends Exception
 {
+    protected $code = 422;
+
     /**
      * @return static
      */

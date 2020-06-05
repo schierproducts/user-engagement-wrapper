@@ -7,6 +7,8 @@ use Exception;
 
 class InvalidValue extends Exception
 {
+    protected $code = 422;
+
     /**
      * @param string $field
      * @return static

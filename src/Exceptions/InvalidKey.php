@@ -7,6 +7,8 @@ use Exception;
 
 class InvalidKey extends Exception
 {
+    protected $code = 401;
+
     /**
      * @return static
      */
