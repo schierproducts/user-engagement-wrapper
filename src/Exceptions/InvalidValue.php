@@ -31,7 +31,7 @@ class InvalidValue extends Exception
      */
     public static function validation(array $validationErrors)
     {
-        foreach($validationErrors as $error) {
+        foreach($validationErrors['errors'] as $error) {
             return new static($error);
         }
     }
