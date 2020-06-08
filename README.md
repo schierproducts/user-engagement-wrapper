@@ -1,11 +1,6 @@
-# Very short description of the package
+# Schier User Engagement Platform API wrapper
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/schierproducts/user-engagement-api-wrapper.svg?style=flat-square)](https://packagist.org/packages/schierproducts/user-engagement-api-wrapper)
-[![Build Status](https://img.shields.io/travis/schierproducts/user-engagement-api-wrapper/master.svg?style=flat-square)](https://travis-ci.org/schierproducts/user-engagement-api-wrapper)
-[![Quality Score](https://img.shields.io/scrutinizer/g/schierproducts/user-engagement-api-wrapper.svg?style=flat-square)](https://scrutinizer-ci.com/g/schierproducts/user-engagement-api-wrapper)
-[![Total Downloads](https://img.shields.io/packagist/dt/schierproducts/user-engagement-api-wrapper.svg?style=flat-square)](https://packagist.org/packages/schierproducts/user-engagement-api-wrapper)
-
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+This package is an API wrapper for the Schier User Engagement platform API.
 
 ## Installation
 
@@ -17,37 +12,58 @@ composer require schierproducts/user-engagement-api-wrapper
 
 ## Usage
 
-``` php
-// Usage description here
-```
-
-### Testing
-
-``` bash
-composer test
-```
-
-### Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+TODO
 
 ### Security
 
 If you discover any security related issues, please email doug@builtwellstudio.com instead of using the issue tracker.
 
-## Credits
+### Example Commands
 
-- [Doug Niccum](https://github.com/schierproducts)
-- [All Contributors](../../contributors)
+To add Logged In event
 
-## License
+```bash
+user-engagement:import-events activity_log description loggedIn --user=causer_id
+```
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+To add Signed Up event
 
-## Laravel Package Boilerplate
+```bash
+user-engagement:import-events users created_at signedUp --user=id
+```
 
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
+To add Project Created event
+
+```bash
+user-engagement:import-events configurations created_at createProject --user=created_by --project
+```
+
+To add Kickout Viewed event
+
+```bash
+user-engagement:import-events configurations kickout_viewed viewedKickout --query=true --user=created_by --project
+```
+
+To add Address Added event
+
+```bash
+user-engagement:import-events configurations street_address addedAddress --exists --user=created_by --project
+```
+
+To add Project Submitted event
+
+```bash
+user-engagement:import-events configurations submitted_at submittedPreApproval --exists --user=created_by --project
+```
+
+To add Project Closed event
+
+```bash
+user-engagement:import-events configurations status closeProject --query=closed --user=created_by --project
+```
+
+To add Notes Added event
+
+```bash
+user-engagement:import-events configurations pre_approval_notes addedNote --exists --user=created_by --project
+```
