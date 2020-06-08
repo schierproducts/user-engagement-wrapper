@@ -67,7 +67,8 @@ class ImportEngineers extends Command
                         'phone_number' => $model->phone_number,
                         'company' => $model->company,
                         'postal_code' => $model->postal_code,
-                        'registered' => $model->created_at->timestamp
+                        'registered' => $model->created_at->timestamp,
+                        'grease_monkey_id' => $model->id,
                     ]);
                     UserEngagementApi::engineer()->create($newEngineer);
 

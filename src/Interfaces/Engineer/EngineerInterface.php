@@ -58,6 +58,11 @@ class EngineerInterface
     public $postal_code;
 
     /**
+     * @var int|null
+     */
+    public $grease_monkey_id;
+
+    /**
      * ActionEventInterface constructor.
      * @param array $array
      */
@@ -78,6 +83,7 @@ class EngineerInterface
             }
             $this->company = array_key_exists('company', $array) ? $array['company'] : null;
             $this->postal_code = array_key_exists('postal_code', $array) ? $array['postal_code'] : null;
+            $this->grease_monkey_id = array_key_exists('grease_monkey_id', $array) ? $array['grease_monkey_id'] : null;
         }
     }
 
