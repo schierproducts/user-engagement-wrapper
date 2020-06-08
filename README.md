@@ -20,6 +20,12 @@ If you discover any security related issues, please email doug@builtwellstudio.c
 
 ### Example Commands
 
+To import the available engineers
+
+```bash
+user-engagement:import-engineers
+```
+
 To add Logged In event
 
 ```bash
