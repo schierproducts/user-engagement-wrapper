@@ -69,6 +69,7 @@ class ImportEngineers extends Command
                         'postal_code' => $model->postal_code,
                         'registered' => $model->created_at->timestamp,
                         'grease_monkey_id' => $model->id,
+                        'add_event' => true,
                     ]);
                     UserEngagementApi::engineer()->create($newEngineer);
 
