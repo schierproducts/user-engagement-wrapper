@@ -63,6 +63,11 @@ class EngineerInterface
     public $grease_monkey_id;
 
     /**
+     * @var bool
+     */
+    public $add_event = false;
+
+    /**
      * ActionEventInterface constructor.
      * @param array $array
      */
@@ -84,6 +89,10 @@ class EngineerInterface
             $this->company = array_key_exists('company', $array) ? $array['company'] : null;
             $this->postal_code = array_key_exists('postal_code', $array) ? $array['postal_code'] : null;
             $this->grease_monkey_id = array_key_exists('grease_monkey_id', $array) ? $array['grease_monkey_id'] : null;
+
+            if (array_key_exists('add_event', $array) && $array['add_event']) {
+                $this->add_event = true;
+            }
         }
     }
 
