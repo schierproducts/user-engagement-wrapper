@@ -5,8 +5,8 @@
         "schierproducts",
         "user-engagement-api"
     ],
-    "version": "1.0.1",
-    "homepage": "https://github.com/schierproducts/user-engagement-api",
+    "version": "1.0.2",
+    "homepage": "https://bitbucket.org/schierproducts/user-engagement-api",
     "license": "MIT",
     "type": "library",
     "authors": [
