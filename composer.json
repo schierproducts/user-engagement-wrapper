@@ -19,7 +19,7 @@
     "require": {
         "php": "^7.3",
         "ext-json": "*",
-        "bensampo/laravel-enum": "^1.37",
+        "bensampo/laravel-enum": "^3.0.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "illuminate/support": "^7.0"
     },
